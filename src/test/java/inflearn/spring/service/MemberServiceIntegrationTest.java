@@ -1,43 +1,39 @@
 package inflearn.spring.service;
 
 import inflearn.spring.domain.Member;
+import inflearn.spring.repository.MemberRepository;
 import inflearn.spring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MemberServiceTest {
-    //단위테스트가 통테보다 좋은 테스트일 확률이 높다.
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
 
-    //DI
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
+    //@Commit
     void join() {
         //given
         Member member = new Member();
-        member.setName("spring");
+        member.setName("spring4");
 
         //when
         long savedId = memberService.join(member);
 
         //then
         Member findMember = memberService.findOne(savedId).get();
-        assertThat(member).isEqualTo(findMember);
+        assertEquals(member.getName(), findMember.getName());
     }
 
     @Test
@@ -64,11 +60,4 @@ class MemberServiceTest {
         //then
     }
 
-    @Test
-    void findMember() {
-    }
-
-    @Test
-    void findOne() {
-    }
 }
