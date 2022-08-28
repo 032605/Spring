@@ -1,6 +1,7 @@
 package inflearn.spring;
 
 import inflearn.spring.repository.JdbcMemberRepostiory;
+import inflearn.spring.repository.JdbcTemplateMemberRepository;
 import inflearn.spring.repository.MemberRepository;
 import inflearn.spring.repository.MemoryMemberRepository;
 import inflearn.spring.service.MemberService;
@@ -29,6 +30,7 @@ public class SpringConfig {
     public MemberRepository memberRepository(){
         //new 키워드 뒤에 인터페이스 구현 클래스
         //return new MemoryMemberRepository();
-        return new JdbcMemberRepostiory(dataSource);
+        //return new JdbcMemberRepostiory(dataSource);
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 }
