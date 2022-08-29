@@ -1,5 +1,6 @@
 package inflearn.spring;
 
+import inflearn.spring.aop.TimeTraceAop;
 import inflearn.spring.repository.*;
 import inflearn.spring.service.MemberService;
 import org.springframework.context.annotation.Bean;
